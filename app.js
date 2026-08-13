@@ -141,30 +141,35 @@
   }
 
   async function loadStats() {
-    try {
-      const res = await fetch(CONFIG.STATS_URL, {
-        method: "GET"
-      });
-
-      const data = await parseResponseSafely(res);
-
-      if (
-        !res.ok ||
-        data.success === false ||
-        !data.totals
-      ) {
-        throw new Error("Stats unavailable");
+  try {
+    const res = await fetch(
+      CONFIG.STATS_URL + "?t=" + Date.now(),
+      {
+        method: "GET",
+        cache: "no-store"
       }
+    );
 
-      state.counts = {
-        crisis: Number(data.totals.crisis || 0),
-        coverage: Number(data.totals.coverage || 0),
-        event: Number(data.totals.event || 0),
-        all: Number(data.totals.all || 0)
-      };
+    const data = await parseResponseSafely(res);
 
-      renderCounts();
-async function loadStats() {
+    if (!res.ok || !data.totals) {
+      throw new Error("Stats unavailable");
+    }
+
+    state.counts = {
+      crisis: Number(data.totals.crisis ?? 0),
+      coverage: Number(data.totals.coverage ?? 0),
+      event: Number(data.totals.event ?? 0),
+      all: Number(data.totals.all ?? 0)
+    };
+
+    renderCounts();
+
+  } catch (err) {
+    console.error("Stats error:", err);
+  }
+}
+  async function loadStats() {
   try {
     const res = await fetch(CONFIG.STATS_URL, {
       method: "GET",
