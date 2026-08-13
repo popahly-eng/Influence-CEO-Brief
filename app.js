@@ -167,20 +167,23 @@
 async function loadStats() {
   try {
     const res = await fetch(CONFIG.STATS_URL, {
-      method: "GET"
+      method: "GET",
+      cache: "no-store"
     });
 
     const data = await parseResponseSafely(res);
+
+    console.log("STATS RESPONSE:", data);
 
     if (!res.ok || data.success === false || !data.totals) {
       throw new Error("Could not load brief stats.");
     }
 
     state.counts = {
-      crisis: Number(data.totals.crisis || 0),
-      coverage: Number(data.totals.coverage || 0),
-      event: Number(data.totals.event || 0),
-      all: Number(data.totals.all || 0)
+      crisis: Number(data.totals.crisis ?? 0),
+      coverage: Number(data.totals.coverage ?? 0),
+      event: Number(data.totals.event ?? 0),
+      all: Number(data.totals.all ?? 0)
     };
 
     renderCounts();
