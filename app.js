@@ -164,10 +164,31 @@
       };
 
       renderCounts();
-    } catch (err) {
-      console.warn("Stats unavailable", err);
+async function loadStats() {
+  try {
+    const res = await fetch(CONFIG.STATS_URL, {
+      method: "GET"
+    });
+
+    const data = await parseResponseSafely(res);
+
+    if (!res.ok || data.success === false || !data.totals) {
+      throw new Error("Could not load brief stats.");
     }
+
+    state.counts = {
+      crisis: Number(data.totals.crisis || 0),
+      coverage: Number(data.totals.coverage || 0),
+      event: Number(data.totals.event || 0),
+      all: Number(data.totals.all || 0)
+    };
+
+    renderCounts();
+
+  } catch (err) {
+    console.error("Stats unavailable:", err);
   }
+}
 
   async function loadFormConfig() {
     try {
@@ -465,9 +486,8 @@
     );
   }
 
-  updateSectionUI();
-  renderCounts();
-
-  loadFormConfig();
-  loadStats();
+updateSectionUI();
+renderCounts();
+loadFormConfig();
+loadStats();
 })();
