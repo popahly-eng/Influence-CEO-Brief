@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Influence — CEO Weekly Brief</title>
+  <meta name="description" content="Influence Public Relations CEO Weekly Brief Control Center" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="ambient" aria-hidden="true">
+    <div class="ambient__glow ambient__glow--a"></div>
+    <div class="ambient__glow ambient__glow--b"></div>
+    <div class="ambient__grid"></div>
+  </div>
+
+  <div class="page">
+    <header class="header">
+      <div class="brand">
+        <img src="assets/influence-logo.png" alt="Influence Public Relations" class="brand__logo" />
+        <div>
+          <p class="brand__kicker">EXECUTIVE COMMUNICATIONS</p>
+          <h1>CEO Weekly Brief</h1>
+          <p class="brand__sub">Media & Events Intelligence Control Center</p>
+        </div>
+      </div>
+      <div class="header__status"><span class="status-dot"></span> LIVE</div>
+    </header>
+
+    <main class="main">
+      <section class="card">
+        <div class="card__head">
+          <span class="card__eyebrow">01</span>
+          <span class="card__label">Brief Section</span>
+        </div>
+        <div class="segmented segmented--3" id="sectionGroup">
+          <button type="button" class="segmented__opt is-active" data-value="crisis">⚠ Crisis & Updates</button>
+          <button type="button" class="segmented__opt" data-value="coverage">📰 Media Coverage</button>
+          <button type="button" class="segmented__opt" data-value="event">📅 Upcoming Events</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <span class="card__eyebrow">02</span>
+          <label for="urlInput" class="card__label">Article URL</label>
+        </div>
+        <div class="field-row">
+          <div class="input-wrap">
+            <span class="input-wrap__icon">↗</span>
+            <input id="urlInput" type="url" inputmode="url" class="input" placeholder="Paste an article or event link…" autocomplete="off" />
+          </div>
+          <button id="analyzeBtn" class="btn btn--primary" type="button">
+            <span class="btn__spinner" hidden></span>
+            <span class="btn__label">Analyze with AI</span>
+          </button>
+        </div>
+        <p id="urlHint" class="field-hint">The AI will prepare a concise executive headline and summary.</p>
+      </section>
+
+      <section class="card" id="analysisCard" hidden>
+        <div class="card__head">
+          <span class="card__eyebrow">03</span>
+          <span class="card__label">AI Analysis</span>
+          <span class="card__tag">Editable</span>
+        </div>
+
+        <label class="field-label" for="headlineInput">Headline</label>
+        <textarea id="headlineInput" class="textarea" rows="2" dir="rtl" placeholder="AI headline will appear here"></textarea>
+
+        <label class="field-label" for="summaryInput">Executive Summary</label>
+        <textarea id="summaryInput" class="textarea textarea--lg" rows="5" dir="rtl" placeholder="AI summary will appear here"></textarea>
+
+        <div class="analysis-meta">
+          <span>Selected Section</span>
+          <strong id="selectedSectionLabel">Crisis & Updates</strong>
+        </div>
+
+        <button id="saveBtn" class="btn btn--primary btn--wide" type="button">
+          <span class="btn__spinner" hidden></span>
+          <span class="btn__label">Add to Weekly Brief</span>
+        </button>
+      </section>
+
+      <section class="card">
+        <div class="card__head">
+          <span class="card__eyebrow">04</span>
+          <span class="card__label">Current Weekly Brief</span>
+          <span class="card__tag">Testing</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat stat--crisis"><span>⚠</span><strong id="crisisCount">—</strong><small>Crisis</small></div>
+          <div class="stat stat--coverage"><span>📰</span><strong id="coverageCount">—</strong><small>Coverage</small></div>
+          <div class="stat stat--event"><span>📅</span><strong id="eventCount">—</strong><small>Events</small></div>
+          <div class="stat stat--total"><span>Σ</span><strong id="totalCount">—</strong><small>Total</small></div>
+        </div>
+
+        <div class="preview-note">Preview sends the generated brief to the configured test email only.</div>
+        <button id="previewBtn" class="btn btn--secondary btn--wide" type="button">
+          <span class="btn__spinner" hidden></span>
+          <span class="btn__label">Preview Weekly Brief</span>
+        </button>
+      </section>
+
+      <p id="formError" class="form-error" hidden></p>
+      <footer>Influence Public Relations · CEO Weekly Brief · Powered by n8n</footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
