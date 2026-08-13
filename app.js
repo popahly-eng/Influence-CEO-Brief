@@ -82,6 +82,31 @@
     el.eventCount.textContent = c.event ?? "—";
     el.totalCount.textContent = c.all ?? "—";
   }
+  async function loadStats() {
+  try {
+    const res = await fetch(CONFIG.STATS_URL, {
+      method: "GET"
+    });
+
+    const data = await parseResponseSafely(res);
+
+    if (!res.ok || data.success === false || !data.totals) {
+      throw new Error("Stats unavailable");
+    }
+
+    state.counts = {
+      crisis: Number(data.totals.crisis || 0),
+      coverage: Number(data.totals.coverage || 0),
+      event: Number(data.totals.event || 0),
+      all: Number(data.totals.all || 0)
+    };
+
+    renderCounts();
+
+  } catch (err) {
+    console.warn("Stats unavailable", err);
+  }
+}
 
   async function loadFormConfig() {
     try {
@@ -162,17 +187,13 @@
       }
 
       showToast("Item added to the weekly brief.");
+      await loadStats();
       el.analysisCard.hidden = true;
       el.headlineInput.value = "";
       el.summaryInput.value = "";
       el.urlInput.value = "";
       state.lastUrl = "";
 
-      if (typeof state.counts[state.section] === "number") {
-        state.counts[state.section] += 1;
-        state.counts.all += 1;
-        renderCounts();
-      }
     } catch (err) {
       showError(err.message || "Could not save the item.");
     } finally {
@@ -193,14 +214,8 @@
       if (!res.ok || data.success === false) {
         throw new Error(data.message || "Preview workflow failed.");
       }
-      if (data.totals) {
-        state.counts = {
-          crisis: Number(data.totals.crisis || 0),
-          coverage: Number(data.totals.coverage || 0),
-          event: Number(data.totals.event || 0),
-          all: Number(data.totals.all || 0)
-        };
-        renderCounts();
+      
+      await loadStats();
       }
       showToast("Preview workflow started. Check the test inbox.");
     } catch (err) {
@@ -223,7 +238,8 @@
     if (event.key === "Enter") { event.preventDefault(); analyze(); }
   });
 
-  updateSectionUI();
-  renderCounts();
-  loadFormConfig();
+updateSectionUI();
+renderCounts();
+loadFormConfig();
+loadStats();
 })();
