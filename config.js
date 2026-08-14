@@ -12,5 +12,8 @@ const CONFIG = {
     "https://popahly.app.n8n.cloud/webhook/ceo-brief-preview",
 
   STATS_URL:
-    "https://popahly.app.n8n.cloud/webhook/ceo-brief-stats"
+    "https://popahly.app.n8n.cloud/webhook/ceo-brief-stats",
+
+  FINAL_SEND_URL:
+    "https://popahly.app.n8n.cloud/webhook/ceo-brief-final-send"
 };
