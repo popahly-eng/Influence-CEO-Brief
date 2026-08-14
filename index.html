@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Influence — CEO Weekly Brief</title>
   <meta name="description" content="Influence Public Relations CEO Weekly Brief Control Center" />
-  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -64,16 +64,6 @@
         <button id="manualBtn" class="btn btn--manual btn--wide" type="button">
           <span class="btn__label">✎ Add Information Manually</span>
         </button>
-        <div class="final-send-divider"></div>
-
-<div class="final-send-note">
-  Final Send will email the approved weekly brief to the configured recipients.
-</div>
-
-<button id="finalSendBtn" class="btn btn--final btn--wide" type="button">
-  <span class="btn__spinner" hidden></span>
-  <span class="btn__label">Send Final Brief</span>
-</button>
         <p class="manual-note">Use this for internal updates or information without a source link. The URL is optional.</p>
       </section>
 
@@ -120,6 +110,14 @@
           <span class="btn__spinner" hidden></span>
           <span class="btn__label">Preview Weekly Brief</span>
         </button>
+
+        <div class="final-send-divider"></div>
+        <div class="final-send-note">Final Send will email the approved weekly brief to the configured recipients.</div>
+
+        <button id="finalSendBtn" class="btn btn--final btn--wide" type="button">
+          <span class="btn__spinner" hidden></span>
+          <span class="btn__label">Send Final Brief</span>
+        </button>
       </section>
 
       <p id="formError" class="form-error" hidden></p>
@@ -128,31 +126,21 @@
   </div>
 
   <div id="finalSendModal" class="confirm-modal" hidden>
-  <div class="confirm-modal__backdrop"></div>
-
-  <div class="confirm-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="finalSendTitle">
-    <div class="confirm-modal__eyebrow">FINAL APPROVAL</div>
-
-    <h2 id="finalSendTitle">Send Final Weekly Brief?</h2>
-
-    <p>
-      This will email the approved brief to the configured recipients.
-      Duplicate-send protection will remain active.
-    </p>
-
-    <div class="confirm-modal__actions">
-      <button id="cancelFinalSendBtn" class="btn btn--secondary" type="button">
-        Cancel
-      </button>
-
-      <button id="confirmFinalSendBtn" class="btn btn--final" type="button">
-        <span class="btn__spinner" hidden></span>
-        <span class="btn__label">Yes, Send Final Brief</span>
-      </button>
+    <div class="confirm-modal__backdrop"></div>
+    <div class="confirm-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="finalSendTitle">
+      <div class="confirm-modal__eyebrow">FINAL APPROVAL</div>
+      <h2 id="finalSendTitle">Send Final Weekly Brief?</h2>
+      <p>This will email the approved brief to the configured recipients. Duplicate-send protection will remain active.</p>
+      <div class="confirm-modal__actions">
+        <button id="cancelFinalSendBtn" class="btn btn--secondary" type="button">Cancel</button>
+        <button id="confirmFinalSendBtn" class="btn btn--final" type="button">
+          <span class="btn__spinner" hidden></span>
+          <span class="btn__label">Yes, Send Final Brief</span>
+        </button>
+      </div>
     </div>
   </div>
-</div>
-  
+
   <div id="toast" class="toast" hidden></div>
 
   <script src="config.js"></script>
