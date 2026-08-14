@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Influence — CEO Weekly Brief</title>
   <meta name="description" content="Influence Public Relations CEO Weekly Brief Control Center" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=2" />
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -45,6 +45,7 @@
           <span class="card__eyebrow">02</span>
           <label for="urlInput" class="card__label">Article URL</label>
         </div>
+
         <div class="field-row">
           <div class="input-wrap">
             <span class="input-wrap__icon">↗</span>
@@ -55,21 +56,29 @@
             <span class="btn__label">Analyze with AI</span>
           </button>
         </div>
+
         <p id="urlHint" class="field-hint">The AI will prepare a concise executive headline and summary.</p>
+
+        <div class="entry-divider"><span>OR</span></div>
+
+        <button id="manualBtn" class="btn btn--manual btn--wide" type="button">
+          <span class="btn__label">✎ Add Information Manually</span>
+        </button>
+        <p class="manual-note">Use this for internal updates or information without a source link. The URL is optional.</p>
       </section>
 
       <section class="card" id="analysisCard" hidden>
         <div class="card__head">
           <span class="card__eyebrow">03</span>
-          <span class="card__label">AI Analysis</span>
-          <span class="card__tag">Editable</span>
+          <span class="card__label" id="analysisModeLabel">AI Analysis</span>
+          <span class="card__tag" id="analysisModeTag">Editable</span>
         </div>
 
         <label class="field-label" for="headlineInput">Headline</label>
-        <textarea id="headlineInput" class="textarea" rows="2" dir="rtl" placeholder="AI headline will appear here"></textarea>
+        <textarea id="headlineInput" class="textarea" rows="2" dir="rtl" placeholder="Executive headline"></textarea>
 
         <label class="field-label" for="summaryInput">Executive Summary</label>
-        <textarea id="summaryInput" class="textarea textarea--lg" rows="5" dir="rtl" placeholder="AI summary will appear here"></textarea>
+        <textarea id="summaryInput" class="textarea textarea--lg" rows="5" dir="rtl" placeholder="Executive summary"></textarea>
 
         <div class="analysis-meta">
           <span>Selected Section</span>
@@ -111,6 +120,6 @@
   <div id="toast" class="toast" hidden></div>
 
   <script src="config.js"></script>
-  <script src="app.js?v=5"></script>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
