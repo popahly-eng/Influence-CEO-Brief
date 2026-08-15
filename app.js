@@ -12,6 +12,7 @@
     mode: "ai",
     lastUrl: "",
     finalSending: false,
+    previewOpen: false,
     counts: {
       crisis: null,
       coverage: null,
@@ -34,6 +35,9 @@
     selectedSectionLabel: document.getElementById("selectedSectionLabel"),
     saveBtn: document.getElementById("saveBtn"),
     previewBtn: document.getElementById("previewBtn"),
+    previewModal: document.getElementById("previewModal"),
+    previewFrame: document.getElementById("previewFrame"),
+    closePreviewBtn: document.getElementById("closePreviewBtn"),
     finalSendBtn: document.getElementById("finalSendBtn"),
     finalSendModal: document.getElementById("finalSendModal"),
     cancelFinalSendBtn: document.getElementById("cancelFinalSendBtn"),
@@ -287,13 +291,35 @@
       if (!res.ok || data.success === false) {
         throw new Error(data.message || "Preview workflow failed.");
       }
-      await loadStats();
-      showToast("Preview workflow started. Check the test inbox.");
+      const html = typeof data.html === "string" ? data.html : "";
+      if (!html) {
+        throw new Error(data.message || "The preview HTML was not returned.");
+      }
+
+      if (!el.previewModal || !el.previewFrame) {
+        throw new Error("Preview window is not available on this page.");
+      }
+
+      el.previewFrame.srcdoc = html;
+      el.previewModal.hidden = false;
+      state.previewOpen = true;
+      document.body.classList.add("modal-open");
+      setTimeout(() => el.closePreviewBtn?.focus(), 0);
     } catch (err) {
       showError(err.message || "Could not generate the preview.");
     } finally {
       setLoading(el.previewBtn, false);
     }
+  }
+
+
+  function closePreviewModal() {
+    if (!el.previewModal) return;
+    el.previewModal.hidden = true;
+    state.previewOpen = false;
+    if (el.previewFrame) el.previewFrame.srcdoc = "";
+    document.body.classList.remove("modal-open");
+    el.previewBtn?.focus();
   }
 
   function openFinalSendModal() {
@@ -384,9 +410,16 @@
   el.manualBtn?.addEventListener("click", openManualEntry);
   el.saveBtn?.addEventListener("click", saveItem);
   el.previewBtn?.addEventListener("click", previewBrief);
+  el.closePreviewBtn?.addEventListener("click", closePreviewModal);
   el.finalSendBtn?.addEventListener("click", openFinalSendModal);
   el.cancelFinalSendBtn?.addEventListener("click", closeFinalSendModal);
   el.confirmFinalSendBtn?.addEventListener("click", sendFinalBrief);
+
+  el.previewModal?.addEventListener("click", (event) => {
+    if (event.target.classList.contains("preview-modal__backdrop")) {
+      closePreviewModal();
+    }
+  });
 
   el.finalSendModal?.addEventListener("click", (event) => {
     if (event.target.classList.contains("confirm-modal__backdrop")) {
@@ -395,7 +428,12 @@
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && el.finalSendModal && !el.finalSendModal.hidden) {
+    if (event.key !== "Escape") return;
+    if (el.previewModal && !el.previewModal.hidden) {
+      closePreviewModal();
+      return;
+    }
+    if (el.finalSendModal && !el.finalSendModal.hidden) {
       closeFinalSendModal();
     }
   });

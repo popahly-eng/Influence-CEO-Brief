@@ -105,7 +105,7 @@
           <div class="stat stat--total"><span>Σ</span><strong id="totalCount">—</strong><small>Total</small></div>
         </div>
 
-        <div class="preview-note">Preview sends the generated brief to the configured test email only.</div>
+        <div class="preview-note">Review the complete weekly brief before final approval and sending.</div>
         <button id="previewBtn" class="btn btn--secondary btn--wide" type="button">
           <span class="btn__spinner" hidden></span>
           <span class="btn__label">Preview Weekly Brief</span>
@@ -123,6 +123,22 @@
       <p id="formError" class="form-error" hidden></p>
       <footer>Influence Public Relations · CEO Weekly Brief · Powered by n8n</footer>
     </main>
+  </div>
+
+  <div id="previewModal" class="preview-modal" hidden>
+    <div class="preview-modal__backdrop"></div>
+    <div class="preview-modal__shell" role="dialog" aria-modal="true" aria-labelledby="previewModalTitle">
+      <div class="preview-modal__bar">
+        <div>
+          <div class="preview-modal__eyebrow">WEEKLY BRIEF PREVIEW</div>
+          <h2 id="previewModalTitle">CEO Weekly Brief</h2>
+        </div>
+        <button id="closePreviewBtn" class="preview-modal__close" type="button" aria-label="Close preview">Close Preview</button>
+      </div>
+      <div class="preview-modal__stage">
+        <iframe id="previewFrame" class="preview-modal__frame" title="Weekly Brief Preview" sandbox="allow-popups allow-popups-to-escape-sandbox"></iframe>
+      </div>
+    </div>
   </div>
 
   <div id="finalSendModal" class="confirm-modal" hidden>
@@ -144,6 +160,6 @@
   <div id="toast" class="toast" hidden></div>
 
   <script src="config.js"></script>
-  <script src="app.js?v=7"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>
